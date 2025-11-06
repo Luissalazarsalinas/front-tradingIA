@@ -1,0 +1,722 @@
+// src/styles/main.scss
+@use "sass:color";
+
+// =====================
+// TradingIA - estilos centrales
+// =====================
+
+// ===================== Variables centrales =====================
+$brand-primary: #0ddfc0; // teal claro
+$brand-secondary: #10b981; // teal oscuro
+$bg-dark-100: #071018;
+$bg-dark-200: #091018;
+$card-bg: rgba(255,255,255,0.03);
+$text-main: #cfeff4;
+$text-muted: rgba(207,239,244,0.7);
+$accent-1: #7fffd4;
+$danger: #ff6b6b;
+
+$radius-lg: 12px;
+$radius-md: 8px;
+$shadow-soft: 0 6px 18px rgba(2,6,23,0.55);
+$glass-border: 1px solid rgba(13,223,192,0.06);
+
+// Typography
+$font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+$h1-size: 2.4rem;
+$h2-size: 1.6rem;
+
+// Spacing scales (convenience)
+$gutter: 1.25rem;
+
+// ===================== Mixins =====================
+@mixin smooth() {
+  transition: all 180ms cubic-bezier(.2,.9,.25,1);
+}
+
+// subtle focus outline for a11y
+@mixin focus-ring($color: $brand-primary) {
+  outline: 3px solid rgba(color.red($color), color.green($color), color.blue($color), 0.12);
+  outline-offset: 3px;
+}
+
+// ===================== Base / Body =====================
+:root {
+  --brand-primary: #{$brand-primary};
+  --brand-secondary: #{$brand-secondary};
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: $font-sans;
+  color: $text-main;
+  background: radial-gradient(circle at 10% 10%, #0b1220, $bg-dark-200 40%, $bg-dark-100 100%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.45;
+  margin: 0;
+}
+
+// Links
+a { color: $brand-primary; @include smooth(); }
+a:hover { color: color.adjust($brand-primary, $lightness: 6%); }
+
+// ===================== Navbar / Header =====================
+.navbar {
+  background: linear-gradient(180deg, rgba(11,17,31,0.95), rgba(6,11,18,0.95));
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: $brand-primary !important;
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, $brand-secondary, $brand-primary);
+      box-shadow: 0 4px 12px rgba(13,223,192,0.12);
+    }
+  }
+  .nav-link {
+    color: rgba(255,255,255,0.78);
+    &.active {
+      color: $brand-primary !important;
+      font-weight: 600;
+    }
+    &:hover { color: $brand-primary; }
+  }
+  .btn-success {
+    background: linear-gradient(90deg, $brand-secondary, $brand-primary);
+    border: none;
+    box-shadow: 0 6px 18px rgba(13,223,192,0.06);
+    padding: 0.45rem 0.9rem;
+    border-radius: 10px;
+    font-weight: 600;
+    @include smooth();
+    &:hover { transform: translateY(-2px); background: linear-gradient(90deg, color.adjust($brand-secondary, $lightness: -6%), color.adjust($brand-primary, $lightness: -6%)); }
+  }
+  .btn-outline-secondary {
+    color: rgba(255,255,255,0.85);
+    border-color: rgba(255,255,255,0.06);
+  }
+}
+
+// ===================== Hero / Home =====================
+.hero-section {
+  padding: 4.5rem 0;
+  text-align: center;
+  .hero-title {
+    font-size: $h1-size;
+    color: $brand-primary;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+    margin-bottom: 0.2rem;
+  }
+  .hero-sub {
+    color: $text-muted;
+    font-size: 1.05rem;
+  }
+  .hero-cta {
+    margin-top: 1.25rem;
+    .btn {
+      min-width: 200px;
+      padding: 0.7rem 1.2rem;
+    }
+  }
+}
+
+// ===================== Cards & Features =====================
+.card.custom-card {
+  background: $card-bg;
+  border: $glass-border;
+  border-radius: $radius-md;
+  box-shadow: $shadow-soft;
+  color: $text-main;
+  padding: 1.25rem;
+}
+
+.feature-grid {
+  .feature-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
+    border-radius: 12px;
+    padding: 1.4rem;
+    min-height: 190px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    .icon {
+      font-size: 34px;
+      margin-bottom: 0.6rem;
+      filter: drop-shadow(0 6px 20px rgba(0,0,0,0.45));
+    }
+    h5 { margin-top: 0.4rem; color: #fff; }
+    p { color: $text-muted; margin-top: 0.35rem; }
+    &:hover { transform: translateY(-6px); @include smooth(); }
+  }
+}
+
+// ===================== Forms / Inputs =====================
+.form-section {
+  .form-label { color: $text-muted; font-weight: 600; }
+  .form-control, .form-select {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.05);
+    color: $text-main;
+    border-radius: 8px;
+    padding: 0.65rem 0.8rem;
+    box-shadow: none;
+    @include smooth();
+
+    &:focus {
+      border-color: $brand-primary;
+      box-shadow: 0 8px 24px rgba(13,223,192,0.06);
+      @include focus-ring($brand-primary);
+    }
+    &::placeholder { color: rgba(207,239,244,0.35); }
+  }
+
+  .invalid-feedback { color: #ffb3b3; }
+
+  // Radios / check custom look
+  .form-check {
+    margin-bottom: 0.45rem;
+    .form-check-input {
+      width: 18px;
+      height: 18px;
+      margin-top: 0.15rem;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.01);
+      box-shadow: none;
+      @include smooth();
+      &:checked {
+        background: linear-gradient(90deg, $brand-secondary, $brand-primary);
+        border-color: color.adjust($brand-primary, $lightness: -8%);
+      }
+      &:focus { @include focus-ring($brand-primary); }
+    }
+    .form-check-label { color: $text-main; margin-left: 0.45rem; }
+  }
+
+  .form-text { color: $text-muted; }
+}
+
+// Radio groups displayed in grid for compactness
+.radio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+// ===================== Buttons =====================
+.btn-cta {
+  background: linear-gradient(90deg, $brand-secondary, $brand-primary);
+  border: none;
+  color: #061018;
+  font-weight: 700;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(13,223,192,0.06);
+  @include smooth();
+  &:hover { transform: translateY(-3px); }
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  color: $text-main;
+  &:hover { background: rgba(255,255,255,0.02); }
+}
+
+// ===================== Alerts & Badges =====================
+.alert {
+  border-radius: 10px;
+  &.alert-info { background: linear-gradient(180deg, rgba(13,223,192,0.06), rgba(13,223,192,0.02)); color: $text-main; border: 1px solid rgba(13,223,192,0.05); }
+  &.alert-warning { background: linear-gradient(180deg, rgba(255,193,7,0.04), rgba(255,193,7,0.02)); color: #fff8e1; border: 1px solid rgba(255,193,7,0.04); }
+  &.alert-danger { background: linear-gradient(180deg, rgba(255,80,80,0.06), rgba(255,80,80,0.02)); color: #ffdada; border: 1px solid rgba(255,80,80,0.04); }
+}
+
+// ===================== Cards specific =====================
+.onboarding-card {
+  .card-header { font-weight: 700; color: $brand-primary; }
+  .card-body { padding: 1.25rem; }
+  .hint { color: $text-muted; font-size: 0.95rem; }
+}
+
+// ===================== Dashboard widgets (placeholder) =====================
+
+.widget {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: $glass-border;
+  border-radius: 12px;
+  padding: 1rem;
+  .title { color: rgba(255,255,255,0.9); font-weight: 700; }
+  .value { font-size: 1.6rem; font-weight: 800; color: $brand-primary; }
+}
+
+// ===================== Utilities =====================
+.text-muted { color: $text-muted !important; }
+.small { font-size: 0.88rem; color: $text-muted; }
+
+.kv { // key-value small rows
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.02);
+}
+
+// ===================== Responsive tweaks =====================
+@media (max-width: 768px) {
+  .hero-section { padding: 3rem 0; .hero-title { font-size: 1.8rem; } }
+  .radio-grid { grid-template-columns: 1fr; }
+  .navbar .navbar-brand .brand-logo { width: 34px; height: 34px; }
+}
+
+// small animations
+.fade-in {
+  animation: fadeIn 450ms ease both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================
+   PortfolioIntro styles
+   ===================== */
+.portfolio-intro__risk {
+  .portfolio-intro__risk-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  &-left { flex: 1; }
+  &-right {
+    text-align: right;
+  }
+
+  .portfolio-intro__risk-level {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--brand-primary);
+    font-weight: 800;
+  }
+
+  .portfolio-badge {
+    display: inline-block;
+    padding: 0.45rem 0.65rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-transform: none;
+    &--danger { background: rgba(255,99,132,0.12); color: #ff6b6b; }
+    &--warning { background: rgba(255,193,7,0.06); color: #f59e0b; }
+    &--info { background: rgba(13,110,253,0.06); color: #0ea5e9; }
+    &--success { background: rgba(16,185,129,0.06); color: #10b981; }
+    &--secondary { background: rgba(255,255,255,0.02); color: #cfeff4; }
+  }
+}
+
+/* Suggested assets cards */
+.suggested-asset-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  gap: 1rem;
+  .suggested-asset-card__left {
+    display: flex;
+    flex-direction: column;
+  }
+  .suggested-asset-card__symbol {
+    font-weight: 800;
+    font-size: 1.05rem;
+  }
+  .suggested-asset-card__badge {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.85);
+  }
+}
+
+/* =====================
+   Portfolio page styles
+   ===================== */
+.portfolio-page {
+  .portfolio-note {
+    border-left: 4px solid rgba(16,185,129,0.14);
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    padding: 0.9rem;
+  }
+
+  .portfolio-metrics {
+    .stat-card__inner {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: 10px;
+      min-height: 92px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .stat-card__value {
+      font-weight: 800;
+      font-size: 1.15rem;
+      margin-top: 6px;
+    }
+    .stat-card--accent .stat-card__value {
+      color: #10b981;
+    }
+  }
+
+  .metrics-card {
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+  }
+
+  .holding-row {
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    margin-bottom: 0.6rem;
+  }
+
+  .ai-panel {
+    .ai-panel__item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem;
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+      margin-bottom: 0.6rem;
+    }
+    .ai-panel__title { font-weight: 700; }
+    .ai-panel__actions { display: flex; gap: 0.4rem; }
+  }
+
+  .btn-cta {
+    background: linear-gradient(90deg, #0ddfc0, #10b981);
+    border: none;
+    color: #062626;
+    font-weight: 700;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.04);
+    color: inherit;
+  }
+
+  @media (max-width: 768px) {
+    .portfolio-page { .d-flex { flex-direction: column; gap: 0.6rem; } }
+  }
+}
+
+/* Agent activity item */
+.agent-activity-item {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.01);
+  margin-bottom: 0.5rem;
+
+  &__title { font-weight: 700; }
+}
+
+/* Placeholder graph */
+.placeholder-graph {
+  height: 220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: var(--text-muted);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+}
+
+/* Key metric list */
+.metric-list {
+  .metric-row {
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    padding: 0.6rem 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.02);
+    .metric-value { font-weight: 700; color: #10b981; }
+    .metric-value.negative { color: #ff6b6b; }
+  }
+}
+
+.chart-container {
+  width: 100%;
+  height: 100%;
+  padding: 6px 0;
+}
+
+/* Responsive small tweaks */
+@media (max-width: 768px) {
+  .portfolio-intro__risk-content { flex-direction: column; align-items: flex-start; }
+  .portfolio-intro__risk-right { text-align: left; margin-top: 0.6rem; }
+  .stat-card { flex-direction: row; }
+}
+
+/* =====================
+   Trading page styles
+   ===================== */
+.trading-page {
+  .trading-page__top { margin-bottom: 1.25rem; }
+
+  .asset-row {
+    padding: 0.75rem;
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    margin-bottom: 0.75rem;
+
+    &__head { display:flex; justify-content:space-between; align-items:center; }
+    &__icon {
+      width:44px; height:36px; border-radius:8px;
+      background: rgba(255,255,255,0.02);
+      display:flex; align-items:center; justify-content:center; font-weight:700; margin-right:0.9rem;
+    }
+    &__symbol { font-weight:800; }
+    &__body { margin-top:0.6rem; }
+
+    .asset-order-form { display:block; }
+  }
+
+  .order-row {
+    border-radius: 8px;
+    background: rgba(255,255,255,0.01);
+    margin-bottom: 0.5rem;
+    padding: 0.6rem;
+  }
+
+  .ai-notif {
+    border-radius: 8px;
+    padding: 0.6rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    margin-bottom: 0.6rem;
+  }
+
+  .stat-card__icon { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; background: rgba(255,255,255,0.02); }
+
+  .asset-order-form .form-select, .asset-order-form .form-control { background: rgba(255,255,255,0.02); color: inherit; border: 1px solid rgba(255,255,255,0.03); }
+
+  .btn-ghost { background: transparent; border: 1px solid rgba(255,255,255,0.04); color: inherit; }
+
+  @media (max-width: 768px) {
+    .asset-row__head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  }
+}
+
+/* =====================
+   Dashboard page styles
+   ===================== */
+.dashboard-page {
+  .portfolio-cards {
+    margin-bottom: 1rem;
+    .portfolio-card {
+      min-height: 140px;
+    }
+  }
+
+  .portfolio-card {
+    border-radius: 12px;
+    padding: 1rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+  }
+
+  .portfolio-card__summary {
+    padding: 0.6rem;
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+  }
+
+  .holding-summary {
+    padding: 0.6rem;
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    margin-bottom: 0.6rem;
+  }
+
+  .portfolio-summary-card {
+    display:flex;
+    gap: 1rem;
+    align-items:center;
+    padding: 1rem;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.008));
+    .kpi {
+      .value { font-weight:800; font-size:1.1rem; }
+      .label { color: rgba(255,255,255,0.6); font-size:0.85rem; }
+    }
+  }
+
+  .card.custom-card {
+    background: linear-gradient(180deg, rgba(7,12,20,0.6), rgba(7,12,20,0.5));
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+}
+
+/* responsive tweaks */
+@media (max-width: 768px) {
+  .dashboard-page {
+    .portfolio-cards .portfolio-card { margin-bottom: 0.8rem; }
+  }
+}
+
+/* =====================
+   FinancialProfileForm: controls & umbral + fixes
+   ===================== */
+.financial-profile-form {
+  .card.custom-card { padding: 1rem; }
+
+  .form-range {
+    accent-color: #10b981;
+    height: 3px;
+  }
+
+  .stat-help {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .ai-hint {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .btn-cta {
+    background: linear-gradient(90deg, #0ddfc0, #10b981);
+    border: none;
+    color: #062626;
+    font-weight: 700;
+  }
+
+  .holding-row { margin-bottom: 0.5rem; }
+
+  @media (max-width: 768px) {
+    .financial-profile-form { padding: 0.6rem; }
+  }
+
+  /* QUESTIONNAIRE improvements (contrast, spacing, help modal triggers) */
+  .question-block {
+    padding: 0.9rem 0.4rem;
+    border-bottom: 1px dashed rgba(255,255,255,0.03);
+  }
+  .question-block:last-child { border-bottom: none; }
+  .question-block .fw-semibold {
+    color: #e8fbf6;
+    font-weight: 700;
+    font-size: 0.98rem;
+  }
+  .question-block .form-check {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .question-block .form-check-input {
+    width: 18px;
+    height: 18px;
+    margin-top: 0;
+    box-shadow: none;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .question-block .form-check-label {
+    color: $text-main;
+    margin-left: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.2;
+  }
+
+  .btn-help {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.06);
+    color: $text-main;
+    border: 1px solid rgba(255,255,255,0.04);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 160ms ease;
+  }
+  .btn-help:hover {
+    background: linear-gradient(90deg, color.adjust($brand-primary, $lightness: -6%), color.adjust($brand-secondary, $lightness: -6%));
+    color: #062626;
+    transform: translateY(-2px);
+  }
+
+  /* Modal look for InfoModal */
+  .custom-modal {
+    background: #ffffff;
+    color: #052425;
+    border-radius: 8px;
+    box-shadow: 0 12px 40px rgba(2,6,23,0.3);
+  }
+  .custom-modal .modal-header { border-bottom: 1px solid rgba(2,6,23,0.04); }
+  .custom-modal .modal-title { color: #072b29; font-weight: 700; }
+  .custom-modal .modal-body { color: #0b2b28; font-size: 0.97rem; }
+  .custom-modal .btn-close { filter: invert(0.1); }
+}
+
+/* =====================
+   Onboarding fixes (card color / text contrast)
+   ===================== */
+.onboarding-card,
+.onboarding-card .card,
+.onboarding-card .card-body {
+  background: #ffffff !important;
+  color: #052425 !important;
+  border: 1px solid rgba(7, 12, 20, 0.06);
+  box-shadow: 0 6px 22px rgba(2,6,23,0.06);
+}
+
+.onboarding-card .hint,
+.onboarding-card p,
+.onboarding-card .small,
+.onboarding-card .card-text {
+  color: rgba(5,36,37,0.75) !important;
+}
+
+.onboarding-card .card .btn-cta {
+  color: #062626;
+}
+
+/* If a developer used a plain .card (bootstrap white) override some inputs to show dark text */
+.card:not(.custom-card) .form-control,
+.card:not(.custom-card) .form-select,
+.card:not(.custom-card) .form-text {
+  color: #0b2b28;
+}
+
+/* Accessibility focus improvements */
+.form-check-input:focus, .form-control:focus, .form-select:focus {
+  box-shadow: 0 8px 20px rgba(13,223,192,0.06);
+}
+
+/* Small responsive improvements */
+@media (max-width: 768px) {
+  .financial-profile-form .question-block .form-check { width: 100%; }
+  .btn-help { width: 28px; height: 28px; }
+}
+
+
+
